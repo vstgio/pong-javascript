@@ -6,8 +6,14 @@ var ballPositionY = 10;
 var ballSpeedX = 6;
 var ballSpeedY = 6;
 
-var player01PositionY = 250;
-var player02PositionY = 250;
+var player01 = {
+	score : 0,
+	positionY : 250
+}
+var player02 = {
+	score : 0,
+	positionY : 250
+}
 
 const FRAMES_PER_SECOND = 30;
 const BALL_DIMENSIONS = 15;
@@ -37,20 +43,23 @@ window.onload = function () {
 
 	canvas.addEventListener("mousemove", function(evt) {
 		var mousePosition = getMousePosition(evt);
-		player01PositionY = mousePosition.y - (PLAYER_HEIGHT/2);
+		player01.positionY = mousePosition.y - (PLAYER_HEIGHT/2);
 	});
 
 }
 
 function updatePositions () {
-	ballPositionX = ballPositionX + ballSpeedX;
-	ballPositionY = ballPositionY + ballSpeedY;
+
+	opponentMovement();
+
+	ballPositionX += ballSpeedX;
+	ballPositionY += ballSpeedY;
 
 	if (ballPositionX < 0) {
-		checkCollision(player01PositionY);
+		checkCollision(player01);
 	}
 	if (ballPositionX > canvas.width) {
-		checkCollision(player02PositionY);
+		checkCollision(player02);
 	}
 	if (ballPositionY < 0) {
 		ballSpeedY = -ballSpeedY;
@@ -62,9 +71,11 @@ function updatePositions () {
 
 function drawElements () {
 	drawRect(0, 0, canvas.width, canvas.height, "black");
-	drawRect(0, player01PositionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
-	drawRect(canvas.width-PLAYER_WIDTH, player02PositionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
+	drawRect(0, player01.positionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
+	drawRect(canvas.width-PLAYER_WIDTH, player02.positionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
 	drawRect(ballPositionX, ballPositionY, BALL_DIMENSIONS, BALL_DIMENSIONS, "white");
+	cContext.fillText(player01.score, 100, 100);
+	cContext.fillText(player02.score, canvas.width-100, 100);
 }
 
 function drawRect (customLeft, customTop, customWidth, customHeight, customColor) {
@@ -72,18 +83,39 @@ function drawRect (customLeft, customTop, customWidth, customHeight, customColor
 	cContext.fillRect(customLeft, customTop, customWidth, customHeight);
 }
 
-function checkCollision (playerPosition) {
-	if ((ballPositionY + (BALL_DIMENSIONS/2)) > playerPosition && 
-		(ballPositionY + (BALL_DIMENSIONS/2)) < (playerPosition + PLAYER_HEIGHT)) {
+function checkCollision (player) {
+	if ((ballPositionY + (BALL_DIMENSIONS/2)) > player.positionY && 
+		(ballPositionY + (BALL_DIMENSIONS/2)) < (player.positionY + PLAYER_HEIGHT)) {
 
 		ballSpeedX = -ballSpeedX;
 
 	} else {
-		playerScored();
+	
+		playerScored(player);
 	}
 }
 
-function playerScored () {
+function opponentMovement () {
+	var player02Center = player02.positionY + (PLAYER_HEIGHT/2);
+
+	//A MARGEM DE 35 FOI USADA PARA DEIXAR O MOVIMENTO DO OPONENTE MAIS SUAVE
+	if (player02Center < ballPositionY - 35) {
+		player02.positionY += 6;
+	} else if (player02Center > ballPositionY + 35) {
+		player02.positionY -= 6;
+	}
+}
+
+function playerScored (player) {
+
+	//SE O PLAYER 01 É PARÂMETRO DA FUNÇÃO
+	//SIGNIFICA O ADVERSÁRIO FOI QUEM PONTUOU
+	if (player == player01) {
+		player02.score++;
+	} else {
+		player01.score++;
+	}
+
 	ballSpeedX = -ballSpeedX;
 	ballPositionX = canvas.width/2;
 	ballPositionY = canvas.height/2;
