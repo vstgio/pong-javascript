@@ -3,13 +3,17 @@ var cContext;
 
 var ballPositionX = 10;
 var ballPositionY = 10;
-var ballSpeedX = 10;
-var ballSpeedY = 10;
+var ballSpeedX = 6;
+var ballSpeedY = 6;
 
 var player01PositionY = 250;
+var player02PositionY = 250;
 
 const FRAMES_PER_SECOND = 30;
+const BALL_DIMENSIONS = 15;
+const PLAYER_WIDTH = 10;
 const PLAYER_HEIGHT = 100;
+
 
 function getMousePosition (evt) {
 	var gameRect = canvas.getBoundingClientRect();
@@ -43,10 +47,10 @@ function updatePositions () {
 	ballPositionY = ballPositionY + ballSpeedY;
 
 	if (ballPositionX < 0) {
-		ballSpeedX = -ballSpeedX;
+		checkCollision(player01PositionY);
 	}
 	if (ballPositionX > canvas.width) {
-		ballSpeedX = -ballSpeedX;
+		checkCollision(player02PositionY);
 	}
 	if (ballPositionY < 0) {
 		ballSpeedY = -ballSpeedY;
@@ -58,11 +62,29 @@ function updatePositions () {
 
 function drawElements () {
 	drawRect(0, 0, canvas.width, canvas.height, "black");
-	drawRect(5, player01PositionY, 10, PLAYER_HEIGHT, "white");
-	drawRect(ballPositionX, ballPositionY, 14, 14, "red");
+	drawRect(0, player01PositionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
+	drawRect(canvas.width-PLAYER_WIDTH, player02PositionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
+	drawRect(ballPositionX, ballPositionY, BALL_DIMENSIONS, BALL_DIMENSIONS, "white");
 }
 
 function drawRect (customLeft, customTop, customWidth, customHeight, customColor) {
 	cContext.fillStyle = customColor;
 	cContext.fillRect(customLeft, customTop, customWidth, customHeight);
+}
+
+function checkCollision (playerPosition) {
+	if ((ballPositionY + (BALL_DIMENSIONS/2)) > playerPosition && 
+		(ballPositionY + (BALL_DIMENSIONS/2)) < (playerPosition + PLAYER_HEIGHT)) {
+
+		ballSpeedX = -ballSpeedX;
+
+	} else {
+		playerScored();
+	}
+}
+
+function playerScored () {
+	ballSpeedX = -ballSpeedX;
+	ballPositionX = canvas.width/2;
+	ballPositionY = canvas.height/2;
 }
