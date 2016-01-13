@@ -1,5 +1,3 @@
-//VERIFICAR A CALIBRAGEM DO ADVERSÁRIO
-
 var canvas;
 var cContext;
 
@@ -21,6 +19,8 @@ var player02 = {
 
 var finishGame = false;
 var winner = "";
+
+var howtoIcon = document.getElementById("duvida");
 
 const FRAMES_PER_SECOND = 30;
 const BALL_DIMENSIONS = 15;
@@ -60,6 +60,7 @@ window.onload = function () {
 			finishGame = false;
 		}
 	});
+	
 }
 
 function updatePositions () {
@@ -90,8 +91,9 @@ function drawElements () {
 	drawRect(canvas.width-PLAYER_WIDTH, player02.positionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
 	drawRect(ballPositionX, ballPositionY, BALL_DIMENSIONS, BALL_DIMENSIONS, "white");
 	cContext.font = "40px 'Press Start 2P'";
-	cContext.fillText(player01.score, 130, 100);
-	cContext.fillText(player02.score, canvas.width-160, 100);
+	cContext.textAlign = "center";
+	cContext.fillText(player01.score, canvas.width/4, 100);
+	cContext.fillText(player02.score, canvas.width-(canvas.width/4), 100);
 }
 
 function drawRect (customLeft, customTop, customWidth, customHeight, customColor) {

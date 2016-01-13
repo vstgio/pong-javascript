@@ -1,13 +1,33 @@
 body {
+	color: #000;
+	background: #fff;
 	margin: 0;
 	padding: 0;
+	font-family: "Press Start 2P", "Lucida Console", Monaco, monospace;
+	text-align: center;
+}
+
+h1 {
+	margin: 25px 0 12px 0;
+}
+
+p {
+	font-size: 10px;
+	line-height: 18px;
 }
 
 #gameCanvas {
 	position: absolute;
-	top: 50%;
+	top: 385px;
     left: 50%;
 	transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
+}
+
+#duvida {
+	position: absolute;
+	z-index: 9998888;
+	bottom: 10px;
+	right: 20px;
 }
