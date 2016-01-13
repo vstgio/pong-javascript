@@ -60,7 +60,7 @@ window.onload = function () {
 			finishGame = false;
 		}
 	});
-	
+
 }
 
 function updatePositions () {
@@ -118,8 +118,8 @@ function getMousePosition (evt) {
 }
 
 function checkCollision (player) {
-	if ((ballPositionY + (BALL_DIMENSIONS/2)) > player.positionY && 
-		(ballPositionY + (BALL_DIMENSIONS/2)) < (player.positionY + PLAYER_HEIGHT)) {
+	if (((ballPositionY + BALL_DIMENSIONS) - (BALL_DIMENSIONS/4)) > player.positionY && 
+		(ballPositionY + (BALL_DIMENSIONS/4)) < (player.positionY + PLAYER_HEIGHT)) {
 
 		ballSpeedX = -ballSpeedX;
 		//RECALCULA A VELOCIDADE DA BOLA NO EIXO Y
