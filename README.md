@@ -3,15 +3,11 @@ Este projeto implementa uma versão em HTML5 Canvas e Javascript de um clássico
 
 ---
 ![sample image 01](https://github.com/yurialeksndr/pong-javascript/blob/master/sampleimages/sample01.jpg)
----
 
-<br />
 
 ---
 ![sample image 02](https://github.com/yurialeksndr/pong-javascript/blob/master/sampleimages/sample02.jpg)
----
 
-<br />
 
 ---
 ![sample image 03](https://github.com/yurialeksndr/pong-javascript/blob/master/sampleimages/sample03.jpg)
