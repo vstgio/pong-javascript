@@ -3,10 +3,10 @@
 var canvas;
 var cContext;
 
-var ballPositionX = 50;
-var ballPositionY = 50;
-var ballSpeedX = 10;
-var ballSpeedY = 4;
+var ballPositionX = 400;
+var ballPositionY = 250;
+var ballSpeedX = (Math.random() < 0.5 ? -1 : 1) * 10;
+var ballSpeedY = (Math.random() < 0.5 ? -1 : 1) * 4;
 
 var player01 = {
 	name: "PLAYER O1",
@@ -26,7 +26,7 @@ const FRAMES_PER_SECOND = 30;
 const BALL_DIMENSIONS = 15;
 const PLAYER_WIDTH = 10;
 const PLAYER_HEIGHT = 100;
-const WINNING_SCORE = 1;
+const WINNING_SCORE = 5;
 
 window.onload = function () {
 	
@@ -50,6 +50,16 @@ window.onload = function () {
 		player01.positionY = mousePosition.y - (PLAYER_HEIGHT/2);
 	});
 
+	canvas.addEventListener("mousedown", function(evt) {
+		if (finishGame) {
+			player01.score = 0;
+			player02.score = 0;
+			ballSpeedX = (Math.random() < 0.5 ? -1 : 1) * 10;
+			ballSpeedY = (Math.random() < 0.5 ? -1 : 1) * 4;
+			winner = "";
+			finishGame = false;
+		}
+	});
 }
 
 function updatePositions () {
@@ -75,6 +85,7 @@ function updatePositions () {
 
 function drawElements () {
 	drawRect(0, 0, canvas.width, canvas.height, "black");
+	drawNet();
 	drawRect(0, player01.positionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
 	drawRect(canvas.width-PLAYER_WIDTH, player02.positionY, PLAYER_WIDTH, PLAYER_HEIGHT, "white");
 	drawRect(ballPositionX, ballPositionY, BALL_DIMENSIONS, BALL_DIMENSIONS, "white");
@@ -86,6 +97,12 @@ function drawElements () {
 function drawRect (customLeft, customTop, customWidth, customHeight, customColor) {
 	cContext.fillStyle = customColor;
 	cContext.fillRect(customLeft, customTop, customWidth, customHeight);
+}
+
+function drawNet () {
+	for (var i = 0 ; i < canvas.height ; i+=(canvas.height/20)) {
+		drawRect((canvas.width/2)-(PLAYER_WIDTH/4), i + 5, (PLAYER_WIDTH/2), canvas.height/40, "white");
+	}
 }
 
 function getMousePosition (evt) {
