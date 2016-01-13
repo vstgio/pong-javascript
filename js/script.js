@@ -20,8 +20,6 @@ var player02 = {
 var finishGame = false;
 var winner = "";
 
-var howtoIcon = document.getElementById("duvida");
-
 const FRAMES_PER_SECOND = 30;
 const BALL_DIMENSIONS = 15;
 const PLAYER_WIDTH = 10;

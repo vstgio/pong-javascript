@@ -24,10 +24,3 @@ p {
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
 }
-
-#duvida {
-	position: absolute;
-	z-index: 9998888;
-	bottom: 10px;
-	right: 20px;
-}
